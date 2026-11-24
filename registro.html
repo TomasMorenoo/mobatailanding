@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta — MOBATAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root { --accent: #2563eb; --accent-dark: #1d4ed8; }
+        * { box-sizing: border-box; }
+        body { background: #0f172a; color: #f1f5f9; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; min-height: 100vh; }
+
+        nav { background: #0f172a; border-bottom: 1px solid #1e293b; padding: 1rem 0; }
+        .nav-inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: 2px; color: #fff; text-decoration: none; }
+
+        .page-wrap { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+        .step-indicator { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 2.5rem; justify-content: center; }
+        .step { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all .2s; }
+        .step.done { background: #22c55e; color: #fff; }
+        .step.active { background: var(--accent); color: #fff; }
+        .step.pending { background: #1e293b; color: #475569; border: 1px solid #334155; }
+        .step-line { flex: 1; max-width: 60px; height: 2px; background: #1e293b; }
+        .step-line.done { background: #22c55e; }
+
+        /* PLAN CARDS */
+        #step-plan { display: block; }
+        #step-form { display: none; }
+
+        .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem; }
+        .plan-card { background: #1e293b; border: 2px solid #334155; border-radius: 14px; padding: 1.75rem; cursor: pointer; transition: all .2s; position: relative; }
+        .plan-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .plan-card.selected { border-color: var(--accent); background: #1e3a5f; }
+        .plan-popular { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 3px 12px; border-radius: 20px; white-space: nowrap; letter-spacing: .5px; }
+        .plan-name { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 0.4rem; }
+        .plan-card.selected .plan-name { color: #93c5fd; }
+        .plan-tagline { font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; }
+        .plan-feats { list-style: none; padding: 0; margin: 0 0 1.25rem; }
+        .plan-feats li { font-size: 0.82rem; color: #94a3b8; padding: 3px 0; display: flex; align-items: flex-start; gap: 7px; }
+        .plan-feats li i { color: #22c55e; margin-top: 2px; flex-shrink: 0; }
+        .btn-select { display: block; text-align: center; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: 1px solid #475569; color: #f1f5f9; background: transparent; transition: all .15s; width: 100%; }
+        .plan-card.selected .btn-select,
+        .btn-select:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+        /* FORM */
+        .form-card { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 2rem 2rem; max-width: 580px; margin: 0 auto; }
+        .form-card h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .plan-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(37,99,235,.15); color: #93c5fd; border-radius: 6px; padding: 4px 12px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; cursor: pointer; border: none; }
+        .plan-badge i { font-size: 0.75rem; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media(max-width:520px){ .form-row { grid-template-columns: 1fr; } }
+        .field { margin-bottom: 1rem; }
+        .field label { display: block; font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.4rem; }
+        .field input {
+            width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 8px;
+            padding: 10px 12px; color: #f1f5f9; font-size: 0.9rem; outline: none; transition: border-color .15s;
+        }
+        .field input:focus { border-color: var(--accent); }
+        .field input.error { border-color: #ef4444; }
+        .field input.ok { border-color: #22c55e; }
+        .field-err { font-size: 0.78rem; color: #ef4444; margin-top: 0.3rem; display: none; }
+        .field-err.show { display: block; }
+
+        .pw-wrap { position: relative; }
+        .pw-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #475569; cursor: pointer; padding: 0; font-size: 1rem; }
+        .pw-toggle:hover { color: #94a3b8; }
+
+        .pw-strength { margin-top: 0.4rem; display: flex; gap: 4px; }
+        .pw-bar { flex: 1; height: 3px; border-radius: 2px; background: #334155; transition: background .2s; }
+        .pw-bar.w { background: #ef4444; }
+        .pw-bar.m { background: #f59e0b; }
+        .pw-bar.s { background: #22c55e; }
+        .pw-hint { font-size: 0.75rem; color: #64748b; margin-top: 0.3rem; }
+
+        .btn-submit { width: 100%; padding: 13px; background: var(--accent); border: none; border-radius: 10px; color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .15s; }
+        .btn-submit:hover { background: var(--accent-dark); }
+        .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+        .err-banner { background: rgba(239,68,68,.1); border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; color: #fca5a5; margin-bottom: 1rem; display: none; }
+        .err-banner.show { display: block; }
+        .login-link { text-align: center; margin-top: 1.25rem; font-size: 0.85rem; color: #64748b; }
+        .login-link a { color: #93c5fd; text-decoration: none; }
+        .login-link a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo">MOBATAI</a>
+        <span style="font-size:.85rem;color:#475569;">¿Ya tenés cuenta? <a href="http://localhost:5001/acceso" style="color:#93c5fd;text-decoration:none;">Iniciá sesión</a></span>
+    </div>
+</nav>
+
+<div class="page-wrap">
+
+    <div class="step-indicator">
+        <div class="step active" id="si-1">1</div>
+        <div class="step-line" id="sl-1"></div>
+        <div class="step pending" id="si-2">2</div>
+    </div>
+
+    <!-- STEP 1: PLAN SELECTION -->
+    <div id="step-plan">
+        <h1 style="text-align:center;font-size:1.8rem;font-weight:800;margin-bottom:.5rem;">Elegí tu plan</h1>
+        <p style="text-align:center;color:#94a3b8;margin-bottom:2.5rem;">30 días gratis. Sin tarjeta.</p>
+
+        <div class="plan-grid">
+            <!-- INDIVIDUAL -->
+            <div class="plan-card" data-plan="individual" onclick="selectPlan(this)">
+                <div class="plan-name">Individual</div>
+                <div class="plan-tagline">Todo lo indispensable para llevar adelante tu negocio</div>
+                <ul class="plan-feats">
+                    <li><i class="bi bi-check-circle-fill"></i>1 acceso administrador</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Clientes ilimitados</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Visitas ilimitadas</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Panel de cobros</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Estadísticas</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Mensajes WhatsApp</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Stock y grupos</li>
+                </ul>
+                <button class="btn-select">Elegir Individual</button>
+            </div>
+
+            <!-- PROFESIONAL -->
+            <div class="plan-card" data-plan="profesional" onclick="selectPlan(this)">
+                <div class="plan-popular">MÁS POPULAR</div>
+                <div class="plan-name">Profesional</div>
+                <div class="plan-tagline">Funcionalidades adicionales y personalización</div>
+                <ul class="plan-feats">
+                    <li><i class="bi bi-check-circle-fill"></i>Todo lo del plan Individual</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Hasta 3 administradores</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Hasta 30 empleados</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Roles y permisos</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Personalización del sistema</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Plantillas de mensajes</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Productos extra masivos</li>
+                </ul>
+                <button class="btn-select">Elegir Profesional</button>
+            </div>
+
+            <!-- EMPRESA -->
+            <div class="plan-card" data-plan="empresa" onclick="selectPlan(this)">
+                <div class="plan-name">Empresa</div>
+                <div class="plan-tagline">Herramientas de administración para equipos grandes</div>
+                <ul class="plan-feats">
+                    <li><i class="bi bi-check-circle-fill"></i>Todo lo del plan Profesional</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Administradores ilimitados</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Empleados ilimitados</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Permisos avanzados</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Herramientas de administración</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Múltiples negocios</li>
+                    <li><i class="bi bi-check-circle-fill"></i>Soporte prioritario</li>
+                </ul>
+                <button class="btn-select">Elegir Empresa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 2: REGISTRATION FORM -->
+    <div id="step-form">
+        <div class="form-card">
+            <h2>Crear cuenta</h2>
+            <p style="font-size:.85rem;color:#64748b;margin-bottom:1rem;">30 días gratis. Sin tarjeta de crédito.</p>
+
+            <input type="hidden" id="f-plan" value="individual">
+
+            <button class="plan-badge" onclick="backToPlan()" id="plan-badge-btn">
+                <i class="bi bi-patch-check-fill"></i>
+                <span id="plan-badge-text">Plan Individual</span>
+                <i class="bi bi-pencil" style="margin-left:4px;"></i>
+            </button>
+
+            <div class="err-banner" id="err-banner"></div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label for="f-nombre">Nombre *</label>
+                    <input type="text" id="f-nombre" placeholder="Juan" autocomplete="given-name">
+                    <div class="field-err" id="e-nombre"></div>
+                </div>
+                <div class="field">
+                    <label for="f-apellido">Apellido *</label>
+                    <input type="text" id="f-apellido" placeholder="García" autocomplete="family-name">
+                    <div class="field-err" id="e-apellido"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label for="f-email">Email *</label>
+                    <input type="email" id="f-email" placeholder="juan@email.com" autocomplete="email" oninput="debouncedEmailCheck()">
+                    <div class="field-err" id="e-email"></div>
+                </div>
+                <div class="field">
+                    <label for="f-telefono">Teléfono *</label>
+                    <input type="tel" id="f-telefono" placeholder="11 1234-5678" autocomplete="tel">
+                    <div class="field-err" id="e-telefono"></div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="f-fecha">Fecha de nacimiento *</label>
+                <input type="date" id="f-fecha" autocomplete="bday">
+                <div class="field-err" id="e-fecha"></div>
+            </div>
+
+            <div class="field">
+                <label for="f-password">Contraseña *</label>
+                <div class="pw-wrap">
+                    <input type="password" id="f-password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" oninput="checkPw()">
+                    <button type="button" class="pw-toggle" onclick="togglePw('f-password', this)"><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="pw-strength">
+                    <div class="pw-bar" id="pb1"></div>
+                    <div class="pw-bar" id="pb2"></div>
+                    <div class="pw-bar" id="pb3"></div>
+                    <div class="pw-bar" id="pb4"></div>
+                </div>
+                <div class="pw-hint" id="pw-hint">8+ chars · mayúscula · minúscula · número · símbolo</div>
+                <div class="field-err" id="e-password"></div>
+            </div>
+
+            <div class="field">
+                <label for="f-password2">Repetir contraseña *</label>
+                <div class="pw-wrap">
+                    <input type="password" id="f-password2" placeholder="Repetí la contraseña" autocomplete="new-password">
+                    <button type="button" class="pw-toggle" onclick="togglePw('f-password2', this)"><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="field-err" id="e-password2"></div>
+            </div>
+
+            <button class="btn-submit" id="btn-submit" onclick="submitForm()">
+                <i class="bi bi-rocket-takeoff"></i> Crear cuenta gratis
+            </button>
+
+            <div class="login-link">¿Ya tenés cuenta? <a href="http://localhost:5001/acceso">Iniciá sesión</a></div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const APP_URL = 'http://localhost:5001';
+let selectedPlan = null;
+
+const PLAN_LABELS = {
+    individual: 'Plan Individual',
+    profesional: 'Plan Profesional',
+    empresa: 'Plan Empresa'
+};
+
+function getParam(name) {
+    return new URLSearchParams(window.location.search).get(name);
+}
+
+function selectPlan(card) {
+    selectedPlan = card.dataset.plan;
+    document.getElementById('f-plan').value = selectedPlan;
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    setTimeout(() => goToForm(), 180);
+}
+
+function goToForm() {
+    document.getElementById('step-plan').style.display = 'none';
+    document.getElementById('step-form').style.display = 'block';
+    document.getElementById('plan-badge-text').textContent = PLAN_LABELS[selectedPlan] || 'Plan';
+    document.getElementById('si-1').className = 'step done';
+    document.getElementById('si-1').innerHTML = '<i class="bi bi-check"></i>';
+    document.getElementById('sl-1').className = 'step-line done';
+    document.getElementById('si-2').className = 'step active';
+    document.getElementById('f-nombre').focus();
+}
+
+function backToPlan() {
+    document.getElementById('step-plan').style.display = 'block';
+    document.getElementById('step-form').style.display = 'none';
+    document.getElementById('si-1').className = 'step active';
+    document.getElementById('si-1').innerHTML = '1';
+    document.getElementById('sl-1').className = 'step-line';
+    document.getElementById('si-2').className = 'step pending';
+}
+
+function togglePw(id, btn) {
+    const inp = document.getElementById(id);
+    const icon = btn.querySelector('i');
+    if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'bi bi-eye-slash';
+    } else {
+        inp.type = 'password';
+        icon.className = 'bi bi-eye';
+    }
+}
+
+let emailCheckTimer = null;
+function debouncedEmailCheck() {
+    clearTimeout(emailCheckTimer);
+    const email = (document.getElementById('f-email').value || '').trim().toLowerCase();
+    if (!email.includes('@') || email.length < 5) return;
+    emailCheckTimer = setTimeout(async () => {
+        try {
+            const r = await fetch(APP_URL + '/cuenta/api/check-email?email=' + encodeURIComponent(email));
+            const d = await r.json();
+            if (!d.available) {
+                setFieldErr('email', 'Ya existe una cuenta con ese email');
+            } else {
+                const inp = document.getElementById('f-email');
+                const err = document.getElementById('e-email');
+                inp.classList.remove('error'); inp.classList.add('ok');
+                err.classList.remove('show');
+            }
+        } catch(_) {}
+    }, 600);
+}
+
+const ALLOWED_PW = /^[\x21-\x7E]+$/; // printable ASCII, no spaces
+const SPECIAL = /[!@#$%^&*()\-_=+\[\]{}|;:'",.<>?\/`~\\]/;
+
+function pwErrors(pw) {
+    const errs = [];
+    if (pw.length < 8)           errs.push('mínimo 8 caracteres');
+    if (pw.length > 72)          errs.push('máximo 72 caracteres');
+    if (!/[A-Z]/.test(pw))       errs.push('1 mayúscula');
+    if (!/[a-z]/.test(pw))       errs.push('1 minúscula');
+    if (!/[0-9]/.test(pw))       errs.push('1 número');
+    if (!SPECIAL.test(pw))       errs.push('1 símbolo (!@#$%...)');
+    if (!ALLOWED_PW.test(pw) && pw.length) errs.push('solo caracteres ASCII (sin espacios)');
+    return errs;
+}
+
+function checkPw() {
+    const pw = document.getElementById('f-password').value;
+    const bars = [document.getElementById('pb1'), document.getElementById('pb2'), document.getElementById('pb3'), document.getElementById('pb4')];
+    const hint = document.getElementById('pw-hint');
+
+    bars.forEach(b => b.className = 'pw-bar');
+
+    const criteria = [
+        pw.length >= 8 && pw.length <= 72,
+        /[A-Z]/.test(pw) && /[a-z]/.test(pw),
+        /[0-9]/.test(pw),
+        SPECIAL.test(pw) && ALLOWED_PW.test(pw)
+    ];
+    const score = criteria.filter(Boolean).length;
+
+    const cls = score <= 1 ? 'w' : score === 2 ? 'w' : score === 3 ? 'm' : 's';
+    for (let i = 0; i < score; i++) bars[i].classList.add(cls);
+
+    const errs = pwErrors(pw);
+    if (!pw.length) {
+        hint.textContent = '8+ chars · mayúscula · minúscula · número · símbolo';
+        hint.style.color = '#64748b';
+    } else if (errs.length) {
+        hint.textContent = 'Falta: ' + errs.join(' · ');
+        hint.style.color = '#64748b';
+    } else {
+        hint.textContent = '¡Contraseña segura!';
+        hint.style.color = '#22c55e';
+    }
+}
+
+function setFieldErr(id, msg) {
+    const inp = document.getElementById('f-' + id);
+    const err = document.getElementById('e-' + id);
+    if (msg) {
+        inp.classList.add('error');
+        inp.classList.remove('ok');
+        err.textContent = msg;
+        err.classList.add('show');
+    } else {
+        inp.classList.remove('error');
+        inp.classList.add('ok');
+        err.classList.remove('show');
+    }
+}
+
+function clearErrors() {
+    ['nombre','apellido','email','telefono','fecha','password','password2'].forEach(id => {
+        const inp = document.getElementById('f-' + id);
+        const err = document.getElementById('e-' + id);
+        if (inp) { inp.classList.remove('error','ok'); }
+        if (err) { err.classList.remove('show'); }
+    });
+    document.getElementById('err-banner').classList.remove('show');
+}
+
+function validateForm() {
+    let ok = true;
+    const v = id => (document.getElementById('f-' + id)?.value || '').trim();
+
+    if (!v('nombre')) { setFieldErr('nombre', 'Requerido'); ok = false; }
+    else setFieldErr('nombre', '');
+
+    if (!v('apellido')) { setFieldErr('apellido', 'Requerido'); ok = false; }
+    else setFieldErr('apellido', '');
+
+    const email = v('email');
+    if (!email || !email.includes('@')) { setFieldErr('email', 'Email inválido'); ok = false; }
+    else setFieldErr('email', '');
+
+    if (!v('telefono')) { setFieldErr('telefono', 'Requerido'); ok = false; }
+    else setFieldErr('telefono', '');
+
+    if (!v('fecha')) { setFieldErr('fecha', 'Requerido'); ok = false; }
+    else setFieldErr('fecha', '');
+
+    const pw = document.getElementById('f-password').value;
+    const pwErrs = pwErrors(pw);
+    if (pwErrs.length) { setFieldErr('password', 'Falta: ' + pwErrs.join(', ')); ok = false; }
+    else setFieldErr('password', '');
+
+    const pw2 = document.getElementById('f-password2').value;
+    if (pw !== pw2) { setFieldErr('password2', 'Las contraseñas no coinciden'); ok = false; }
+    else if (pw2) setFieldErr('password2', '');
+
+    return ok;
+}
+
+async function submitForm() {
+    clearErrors();
+    if (!validateForm()) return;
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Creando cuenta...';
+
+    const payload = {
+        nombre: document.getElementById('f-nombre').value.trim(),
+        apellido: document.getElementById('f-apellido').value.trim(),
+        email: document.getElementById('f-email').value.trim().toLowerCase(),
+        telefono: document.getElementById('f-telefono').value.trim(),
+        fecha_nacimiento: document.getElementById('f-fecha').value,
+        password: document.getElementById('f-password').value,
+        plan: document.getElementById('f-plan').value || selectedPlan || 'individual'
+    };
+
+    try {
+        const res = await fetch(APP_URL + '/cuenta/api/registro', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+            window.location.href = data.redirect;
+        } else {
+            if (data.errors) {
+                Object.entries(data.errors).forEach(([k, v]) => {
+                    const fid = k === 'fecha_nacimiento' ? 'fecha' : k;
+                    setFieldErr(fid, v);
+                });
+            } else {
+                const banner = document.getElementById('err-banner');
+                banner.textContent = data.error || 'Error al crear la cuenta';
+                banner.classList.add('show');
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-rocket-takeoff"></i> Crear cuenta gratis';
+        }
+    } catch (e) {
+        const banner = document.getElementById('err-banner');
+        banner.textContent = 'No se pudo conectar con el servidor. Intentá de nuevo.';
+        banner.classList.add('show');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-rocket-takeoff"></i> Crear cuenta gratis';
+    }
+}
+
+// Auto-select plan from URL param or go straight to form
+(function init() {
+    const plan = getParam('plan');
+    if (plan && PLAN_LABELS[plan]) {
+        selectedPlan = plan;
+        document.getElementById('f-plan').value = plan;
+        const card = document.querySelector(`.plan-card[data-plan="${plan}"]`);
+        if (card) card.classList.add('selected');
+        goToForm();
+    }
+})();
+</script>
+<script>
+document.querySelectorAll('input[type="password"]').forEach(function(inp){
+    var p=inp.parentElement;p.style.position='relative';inp.style.paddingRight='2.5rem';
+    var b=document.createElement('button');b.type='button';
+    b.style.cssText='position:absolute;right:.65rem;top:50%;transform:translateY(-50%);background:none;border:none;padding:4px;color:#6c757d;cursor:pointer;z-index:5;line-height:1;';
+    b.innerHTML='<i class="bi bi-eye"></i>';
+    b.addEventListener('click',function(){var s=inp.type==='password';inp.type=s?'text':'password';b.innerHTML=s?'<i class="bi bi-eye-slash"></i>':'<i class="bi bi-eye"></i>';});
+    p.appendChild(b);
+});
+</script>
+</body>
+</html>

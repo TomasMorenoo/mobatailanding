@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBATAI — Gestión para servicios independientes</title>
+    <meta name="description" content="Gestioná tus clientes, visitas y cobros desde un solo lugar. Pensado para trabajadores independientes y pequeñas empresas.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --bg: #0a0f1e;
+            --bg2: #0f172a;
+            --bg3: #1e293b;
+            --border: #1e293b;
+            --accent: #3b82f6;
+            --accent2: #2563eb;
+            --accent-glow: rgba(59,130,246,0.15);
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --muted2: #64748b;
+            --green: #22c55e;
+            --green-bg: rgba(34,197,94,0.1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── NAVBAR ─── */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1rem 0;
+            background: rgba(10,15,30,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(30,41,59,0.8);
+            transition: background 0.3s;
+        }
+        .navbar-inner {
+            max-width: 1140px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .logo {
+            font-size: 1.35rem; font-weight: 900; letter-spacing: 2px;
+            color: var(--text); text-decoration: none;
+        }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--accent); color: #fff !important;
+            border-radius: 8px; padding: 9px 22px; font-weight: 700; font-size: 0.88rem;
+            text-decoration: none; transition: background 0.2s;
+        }
+        .nav-cta:hover { background: var(--accent2) !important; }
+        @media (max-width: 640px) {
+            .nav-links { gap: 1rem; }
+            .nav-links a:not(.nav-cta) { display: none; }
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 7rem 1.5rem 5rem;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-inner { max-width: 1140px; margin: 0 auto; width: 100%; text-align: center; position: relative; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--accent-glow); border: 1px solid rgba(59,130,246,0.3);
+            border-radius: 20px; padding: 5px 14px; font-size: 0.8rem; color: #93c5fd;
+            margin-bottom: 1.5rem; font-weight: 600;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 900; line-height: 1.1;
+            margin-bottom: 1.2rem; letter-spacing: -1px;
+        }
+        .hero h1 .highlight { color: var(--accent); }
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem;
+        }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-hero-primary {
+            background: var(--accent); color: #fff; border: none;
+            border-radius: 10px; padding: 15px 36px;
+            font-weight: 700; font-size: 1rem; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-hero-primary:hover { background: var(--accent2); color: #fff; transform: translateY(-1px); }
+        .btn-hero-outline {
+            background: transparent; color: var(--muted);
+            border: 1px solid var(--border); border-radius: 10px;
+            padding: 15px 32px; font-weight: 600; font-size: 1rem;
+            text-decoration: none; transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-hero-outline:hover { border-color: var(--muted); color: var(--text); }
+        .hero-note { margin-top: 1.2rem; font-size: 0.82rem; color: var(--muted2); }
+        .hero-stats {
+            display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+            margin-top: 4rem; padding-top: 2.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: 800; color: var(--text); }
+        .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+
+        /* ─── SECTIONS ─── */
+        section { padding: 5rem 1.5rem; }
+        .section-inner { max-width: 1140px; margin: 0 auto; }
+        .section-label {
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--accent); margin-bottom: 0.75rem;
+        }
+        .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.5px; }
+        .section-sub { color: var(--muted); font-size: 1rem; max-width: 540px; }
+
+        /* ─── FEATURES ─── */
+        .features-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 3rem;
+        }
+        .feature-item {
+            background: var(--bg2);
+            padding: 2rem;
+            transition: background 0.2s;
+        }
+        .feature-item:hover { background: #131f35; }
+        .feature-ic {
+            width: 42px; height: 42px; border-radius: 10px;
+            background: var(--accent-glow); border: 1px solid rgba(59,130,246,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; color: var(--accent); margin-bottom: 1rem;
+        }
+        .feature-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .feature-item p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+        @media (max-width: 640px) { .features-wrap { grid-template-columns: 1fr; } }
+
+        /* ─── HOW IT WORKS ─── */
+        .steps { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; position: relative; }
+        .steps::before {
+            content: ''; position: absolute; left: 23px; top: 24px; bottom: 24px;
+            width: 2px; background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+        .step { display: flex; gap: 1.5rem; padding: 1.5rem 0; }
+        .step-num {
+            width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+            background: var(--accent); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1rem; position: relative; z-index: 1;
+        }
+        .step-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .step-content p { font-size: 0.9rem; color: var(--muted); }
+
+        /* ─── RUBROS ─── */
+        .rubros-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+        .rubro-tag {
+            background: var(--bg3); border: 1px solid var(--border);
+            border-radius: 20px; padding: 7px 16px; font-size: 0.85rem; color: var(--muted);
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .rubro-tag:hover { border-color: var(--accent); color: var(--text); }
+
+        /* ─── PRICING ─── */
+        #precios { background: var(--bg2); }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem; margin-top: 3rem;
+        }
+        @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; } }
+        .plan-card {
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 16px; padding: 2rem;
+            display: flex; flex-direction: column;
+            transition: transform 0.2s, border-color 0.2s;
+            position: relative;
+        }
+        .plan-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.4); }
+        .plan-card.featured {
+            background: linear-gradient(135deg, #0f2044 0%, #0f172a 100%);
+            border-color: var(--accent);
+        }
+        .plan-card.featured::before {
+            content: 'MÁS POPULAR';
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--accent); color: #fff;
+            font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px;
+            padding: 3px 12px; border-radius: 20px;
+        }
+        .plan-name { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 1rem; }
+        .plan-price { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+        .plan-price sup { font-size: 1.2rem; font-weight: 700; vertical-align: super; }
+        .plan-period { font-size: 0.82rem; color: var(--muted); margin: 0.4rem 0 1rem; }
+        .plan-trial {
+            display: inline-block; background: var(--green-bg);
+            color: var(--green); border-radius: 6px; font-size: 0.75rem;
+            font-weight: 600; padding: 3px 10px; margin-bottom: 1.5rem;
+        }
+        .plan-features { list-style: none; flex: 1; margin-bottom: 1.5rem; }
+        .plan-features li {
+            display: flex; align-items: flex-start; gap: 8px;
+            font-size: 0.88rem; color: #cbd5e1; padding: 5px 0;
+        }
+        .plan-features li i { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+        .plan-features li.disabled { color: var(--muted2); }
+        .plan-features li.disabled i { color: var(--muted2); }
+        .plan-btn {
+            display: block; text-align: center; padding: 13px;
+            border-radius: 9px; font-weight: 700; font-size: 0.95rem;
+            text-decoration: none; border: 1.5px solid transparent;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .plan-btn-ghost { border-color: var(--border); color: var(--text); background: transparent; }
+        .plan-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+        .plan-btn-solid { background: var(--accent); color: #fff; }
+        .plan-btn-solid:hover { background: var(--accent2); color: #fff; }
+
+        /* ─── FAQ ─── */
+        .faq-list { margin-top: 2.5rem; }
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1.25rem 0;
+        }
+        .faq-q {
+            font-weight: 700; font-size: 0.95rem; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            user-select: none;
+        }
+        .faq-q i { color: var(--muted); transition: transform 0.25s; flex-shrink: 0; }
+        .faq-item.open .faq-q i { transform: rotate(45deg); }
+        .faq-a { font-size: 0.9rem; color: var(--muted); margin-top: 0.75rem; display: none; line-height: 1.7; }
+        .faq-item.open .faq-a { display: block; }
+
+        /* ─── CTA FINAL ─── */
+        .cta-section {
+            background: linear-gradient(135deg, #0f2044 0%, var(--bg2) 100%);
+            border-top: 1px solid var(--border);
+            text-align: center; padding: 5rem 1.5rem;
+        }
+        .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900; margin-bottom: 1rem; letter-spacing: -0.5px; }
+        .cta-section p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--bg); border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem; text-align: center;
+            color: var(--muted2); font-size: 0.82rem;
+        }
+        footer a { color: var(--muted2); text-decoration: none; }
+        footer a:hover { color: var(--muted); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="#" class="logo">MOBA<span>TAI</span></a>
+        <div class="nav-links">
+            <a href="#funciones">Funciones</a>
+            <a href="#precios">Precios</a>
+            <a href="#faq">FAQ</a>
+            <a href="http://localhost:5001/acceso">Iniciar sesión</a>
+            <a href="registro.html" class="nav-cta">Empezar gratis</a>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-inner">
+        <div class="hero-badge">
+            <i class="bi bi-stars"></i> Nuevo · Prueba 30 días gratis
+        </div>
+        <h1>
+            Gestioná tu negocio<br>
+            <span class="highlight">sin complicaciones</span>
+        </h1>
+        <p>
+            Clientes, visitas, cobros y estadísticas. Todo en un lugar.
+            Pensado para trabajadores independientes y pequeñas empresas de servicios.
+        </p>
+        <div class="hero-btns">
+            <a href="registro.html?plan=profesional" class="btn-hero-primary">
+                <i class="bi bi-rocket-takeoff"></i> Empezar prueba gratis
+            </a>
+            <a href="#funciones" class="btn-hero-outline">Ver funciones</a>
+        </div>
+        <p class="hero-note">
+            <i class="bi bi-shield-check me-1"></i>
+            30 días gratis · Sin tarjeta · Cancelás cuando querés
+        </p>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">30</div>
+                <div class="stat-label">días de prueba</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">visitas registradas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1 click</div>
+                <div class="stat-label">para cobrar por WhatsApp</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<section id="funciones">
+    <div class="section-inner">
+        <div class="section-label">Funciones</div>
+        <h2 class="section-title">Todo lo que necesitás para crecer</h2>
+        <p class="section-sub">Desde el primer cliente hasta el cobro del mes. MOBATAI cubre todo el flujo de trabajo.</p>
+
+        <div class="features-wrap">
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-house-door"></i></div>
+                <h3>Gestión de clientes</h3>
+                <p>Registrá tus clientes con toda su información. Organizalos por zona, country, barrio o grupo.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-calendar-check"></i></div>
+                <h3>Control de visitas</h3>
+                <p>Registrá cada visita con productos, fotos y observaciones. Historial completo y accesible desde el celular.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-cash-stack"></i></div>
+                <h3>Panel de cobros</h3>
+                <p>Cerrá el mes y gestioná pagos. Pagos parciales, saldo a favor, deudas anteriores. Todo automatizado.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-whatsapp"></i></div>
+                <h3>Mensajes por WhatsApp</h3>
+                <p>Generá mensajes personalizados para notificar cobros con un solo click. Plantillas editables.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-bar-chart"></i></div>
+                <h3>Estadísticas</h3>
+                <p>Ingresos mensuales, productos más usados y proyecciones anuales. Visualizaciones claras.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-boxes"></i></div>
+                <h3>Control de stock</h3>
+                <p>Llevá el stock de productos. Se actualiza automáticamente con cada visita registrada.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-people"></i></div>
+                <h3>Equipo</h3>
+                <p>Agregá empleados con distintos roles. Cada uno accede solo a lo que le corresponde.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-ic"><i class="bi bi-collection"></i></div>
+                <h3>Grupos de clientes</h3>
+                <p>Agrupá varios clientes en un solo cobro. Ideal para countries y edificios con múltiples unidades.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background: var(--bg2);">
+    <div class="section-inner" style="max-width:680px;">
+        <div class="section-label">Cómo funciona</div>
+        <h2 class="section-title">En 4 pasos ya estás trabajando</h2>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h3>Creá tu cuenta</h3>
+                    <p>Registrate con tu email. 30 segundos y listo. Sin tarjeta de crédito.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h3>Configurá tu negocio</h3>
+                    <p>Cargá tus clientes, zonas de trabajo y productos o servicios que ofrecés.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h3>Registrá tus visitas</h3>
+                    <p>Desde el celular, en el momento. Productos usados, fotos y observaciones.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h3>Cobrá sin dolores de cabeza</h3>
+                    <p>Al cierre del mes, el sistema calcula todo. Enviás el mensaje por WhatsApp y listo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RUBROS -->
+<section>
+    <div class="section-inner">
+        <div class="section-label">Rubros</div>
+        <h2 class="section-title">Para cualquier servicio recurrente</h2>
+        <p class="section-sub">Si trabajás mes a mes con los mismos clientes, MOBATAI es para vos.</p>
+        <div class="rubros-grid">
+            <span class="rubro-tag"><i class="bi bi-water"></i> Piletería</span>
+            <span class="rubro-tag"><i class="bi bi-tree"></i> Jardinería</span>
+            <span class="rubro-tag"><i class="bi bi-brush"></i> Pintura</span>
+            <span class="rubro-tag"><i class="bi bi-bug"></i> Fumigación</span>
+            <span class="rubro-tag"><i class="bi bi-stars"></i> Limpieza</span>
+            <span class="rubro-tag"><i class="bi bi-building"></i> Mantenimiento</span>
+            <span class="rubro-tag"><i class="bi bi-wrench"></i> Plomería</span>
+            <span class="rubro-tag"><i class="bi bi-lightning"></i> Electricidad</span>
+            <span class="rubro-tag"><i class="bi bi-thermometer-half"></i> Aire acondicionado</span>
+            <span class="rubro-tag"><i class="bi bi-fire"></i> Gas</span>
+            <span class="rubro-tag"><i class="bi bi-car-front"></i> Mecánica</span>
+            <span class="rubro-tag"><i class="bi bi-plus-circle"></i> Y más...</span>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="precios">
+    <div class="section-inner">
+        <div class="section-label">Precios</div>
+        <h2 class="section-title">Planes simples, sin sorpresas</h2>
+        <p class="section-sub">Todos incluyen 30 días de prueba gratuita. Cancelás cuando querés.</p>
+
+        <div class="pricing-grid">
+            <!-- INDIVIDUAL -->
+            <div class="plan-card">
+                <div class="plan-name">Individual</div>
+                <div class="plan-price"><sup>$</sup>XX</div>
+                <div class="plan-period">por mes · 1 acceso</div>
+                <div class="plan-trial"><i class="bi bi-gift me-1"></i>30 días gratis</div>
+                <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:1.2rem;">
+                    "Todo lo indispensable para llevar adelante tu negocio"
+                </p>
+                <ul class="plan-features">
+                    <li><i class="bi bi-check-circle-fill"></i> 1 acceso de administrador</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Clientes ilimitados</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Visitas ilimitadas</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Panel de cobros mensual</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Estadísticas y reportes</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Mensajes por WhatsApp</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Control de stock</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Grupos de clientes</li>
+                </ul>
+                <a href="registro.html?plan=individual" class="plan-btn plan-btn-ghost">
+                    Empezar gratis
+                </a>
+            </div>
+
+            <!-- PROFESIONAL -->
+            <div class="plan-card featured">
+                <div class="plan-name">Profesional</div>
+                <div class="plan-price"><sup>$</sup>XX</div>
+                <div class="plan-period">por mes · hasta 3 admins + 30 empleados</div>
+                <div class="plan-trial"><i class="bi bi-gift me-1"></i>30 días gratis</div>
+                <p style="font-size:0.82rem;color:#93c5fd;font-style:italic;margin-bottom:1.2rem;">
+                    "Funcionalidades adicionales y personalización"
+                </p>
+                <ul class="plan-features">
+                    <li><i class="bi bi-check-circle-fill"></i> Todo el plan Individual</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Hasta 3 administradores</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Hasta 30 empleados</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Roles y permisos por usuario</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Personalización del negocio</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Plantillas de mensajes</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Productos extra masivos</li>
+                </ul>
+                <a href="registro.html?plan=profesional" class="plan-btn plan-btn-solid">
+                    Empezar gratis
+                </a>
+            </div>
+
+            <!-- EMPRESA -->
+            <div class="plan-card">
+                <div class="plan-name">Empresa</div>
+                <div class="plan-price"><sup>$</sup>XX</div>
+                <div class="plan-period">por mes · sin límites</div>
+                <div class="plan-trial"><i class="bi bi-gift me-1"></i>30 días gratis</div>
+                <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:1.2rem;">
+                    "Herramientas de administración para equipos grandes"
+                </p>
+                <ul class="plan-features">
+                    <li><i class="bi bi-check-circle-fill"></i> Todo el plan Profesional</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Administradores ilimitados</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Empleados ilimitados</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Permisos avanzados por rol</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Herramientas de administración</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Múltiples negocios</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Soporte prioritario</li>
+                </ul>
+                <a href="registro.html?plan=empresa" class="plan-btn plan-btn-ghost">
+                    Empezar gratis
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background: var(--bg2);">
+    <div class="section-inner" style="max-width: 720px;">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Preguntas frecuentes</h2>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-q">¿Necesito instalar algo? <i class="bi bi-plus-lg"></i></div>
+                <div class="faq-a">No. MOBATAI es 100% web. Lo usás desde el navegador del celular o computadora, sin instalar nada. También funciona como PWA (podés "instalarlo" en el home del celular).</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">¿Puedo probarlo antes de pagar? <i class="bi bi-plus-lg"></i></div>
+                <div class="faq-a">Sí. Todos los planes tienen 30 días de prueba gratuita. No pedimos tarjeta de crédito para empezar.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">¿Qué pasa cuando vence el período de prueba? <i class="bi bi-plus-lg"></i></div>
+                <div class="faq-a">Tu cuenta queda pausada pero los datos se conservan. Elegís un plan, lo abonás y en minutos te lo activamos.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">¿Puedo tener varios negocios con la misma cuenta? <i class="bi bi-plus-lg"></i></div>
+                <div class="faq-a">Sí. Con una sola cuenta podés crear y gestionar múltiples negocios. Cada uno tiene sus propios datos, empleados y configuración.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">¿Puedo agregar empleados? <i class="bi bi-plus-lg"></i></div>
+                <div class="faq-a">Sí. En el plan Profesional podés tener hasta 3 usuarios; en el plan Empresa, ilimitados. Cada empleado tiene su usuario y contraseña con los permisos que vos le asignés.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">¿Puedo cancelar cuando quiero? <i class="bi bi-plus-lg"></i></div>
+                <div class="faq-a">Sí, sin permanencia ni penalidades. Si cancelás, el plan sigue activo hasta el fin del período pagado.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<div class="cta-section">
+    <h2>¿Listo para ordenar tu negocio?</h2>
+    <p>30 días gratis. Sin tarjeta. Empezás en 2 minutos.</p>
+    <a href="registro.html" class="btn-hero-primary" style="font-size:1.05rem;padding:16px 44px;margin:0 auto;">
+        <i class="bi bi-rocket-takeoff"></i> Crear cuenta gratis
+    </a>
+</div>
+
+<footer>
+    <p>
+        &copy; 2026 MOBATAI &nbsp;·&nbsp;
+        <a href="#">Términos y condiciones</a> &nbsp;·&nbsp;
+        <a href="#">Privacidad</a> &nbsp;·&nbsp;
+        <a href="https://wa.me/5491100000000">Contacto</a>
+    </p>
+</footer>
+
+<script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-q').forEach(q => {
+        q.addEventListener('click', () => {
+            const item = q.closest('.faq-item');
+            const wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+        document.querySelector('.navbar').style.background =
+            window.scrollY > 20 ? 'rgba(10,15,30,0.98)' : 'rgba(10,15,30,0.85)';
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        });
+    });
+</script>
+</body>
+</html>

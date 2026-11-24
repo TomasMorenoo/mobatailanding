@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    container_name: mobataihome
+    ports:
+      - "5002:80"
+    restart: unless-stopped
