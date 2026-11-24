@@ -133,6 +133,41 @@
         .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.5px; }
         .section-sub { color: var(--muted); font-size: 1rem; max-width: 540px; }
 
+        /* ─── SCREENSHOT ─── */
+        .screenshot-wrap {
+            margin-top: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background: var(--bg3);
+            aspect-ratio: 16/9;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 1rem;
+            color: var(--muted2); font-size: 0.9rem;
+        }
+        .screenshot-wrap i { font-size: 3rem; color: var(--border); }
+
+        /* ─── VIDEO DEMO ─── */
+        .video-wrap {
+            margin-top: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background: var(--bg3);
+            aspect-ratio: 16/9;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 1rem;
+            color: var(--muted2); font-size: 0.9rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .video-wrap:hover { border-color: var(--accent); }
+        .video-play {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: var(--accent); display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: #fff;
+        }
+
         /* ─── FEATURES ─── */
         .features-wrap {
             display: grid;
@@ -176,6 +211,38 @@
         .step-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
         .step-content p { font-size: 0.9rem; color: var(--muted); }
 
+        /* ─── COMPARATIVA ─── */
+        .compare-table {
+            margin-top: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .compare-header {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            background: var(--bg3);
+            border-bottom: 1px solid var(--border);
+        }
+        .compare-header div {
+            padding: 1rem 1.5rem; font-size: 0.82rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .compare-header .col-mobatai { color: var(--accent); }
+        .compare-row {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg2);
+        }
+        .compare-row:last-child { border-bottom: none; }
+        .compare-row div { padding: 0.9rem 1.5rem; font-size: 0.88rem; color: var(--muted); }
+        .compare-row .col-feature { color: var(--text); font-weight: 500; }
+        .compare-row .col-mobatai { color: var(--green); }
+        .compare-row .col-no { color: var(--muted2); }
+        @media (max-width: 600px) {
+            .compare-header, .compare-row { grid-template-columns: 1fr 1fr; }
+            .compare-header div:nth-child(2), .compare-row div:nth-child(2) { display: none; }
+        }
+
         /* ─── RUBROS ─── */
         .rubros-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
         .rubro-tag {
@@ -185,6 +252,35 @@
             transition: border-color 0.2s, color 0.2s;
         }
         .rubro-tag:hover { border-color: var(--accent); color: var(--text); }
+
+        /* ─── TESTIMONIOS ─── */
+        .testimonials-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem; margin-top: 3rem;
+        }
+        @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; } }
+        .testimonial-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.75rem;
+        }
+        .testimonial-stars { color: #f59e0b; font-size: 0.85rem; margin-bottom: 1rem; }
+        .testimonial-text { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+        .testimonial-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--bg3); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: var(--muted2); flex-shrink: 0;
+        }
+        .testimonial-name { font-size: 0.88rem; font-weight: 700; }
+        .testimonial-role { font-size: 0.78rem; color: var(--muted2); }
+        .testimonial-placeholder {
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 0.5rem;
+            min-height: 180px; color: var(--muted2); font-size: 0.82rem; text-align: center;
+            border: 1px dashed var(--border); border-radius: 16px; padding: 1.5rem;
+        }
+        .testimonial-placeholder i { font-size: 1.5rem; color: var(--border); }
 
         /* ─── PRICING ─── */
         #precios { background: var(--bg2); }
@@ -241,6 +337,20 @@
         .plan-btn-solid { background: var(--accent); color: #fff; }
         .plan-btn-solid:hover { background: var(--accent2); color: #fff; }
 
+        /* ─── GARANTIA ─── */
+        .guarantee-box {
+            margin-top: 2.5rem;
+            background: var(--bg); border: 1px solid rgba(34,197,94,0.3);
+            border-radius: 16px; padding: 2rem;
+            display: flex; align-items: flex-start; gap: 1.5rem;
+            max-width: 680px; margin-left: auto; margin-right: auto;
+        }
+        .guarantee-icon {
+            font-size: 2.5rem; color: var(--green); flex-shrink: 0; line-height: 1;
+        }
+        .guarantee-box h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .guarantee-box p { font-size: 0.88rem; color: var(--muted); }
+
         /* ─── FAQ ─── */
         .faq-list { margin-top: 2.5rem; }
         .faq-item {
@@ -269,11 +379,25 @@
         /* ─── FOOTER ─── */
         footer {
             background: var(--bg); border-top: 1px solid var(--border);
-            padding: 2rem 1.5rem; text-align: center;
+            padding: 2.5rem 1.5rem; text-align: center;
             color: var(--muted2); font-size: 0.82rem;
         }
         footer a { color: var(--muted2); text-decoration: none; }
         footer a:hover { color: var(--muted); }
+        .footer-inner { max-width: 1140px; margin: 0 auto; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+
+        /* ─── WHATSAPP FLOTANTE ─── */
+        .wa-float {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: #25d366; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.5); color: #fff; }
     </style>
 </head>
 <body>
@@ -285,6 +409,7 @@
         <div class="nav-links">
             <a href="#funciones">Funciones</a>
             <a href="#precios">Precios</a>
+            <a href="#testimonios">Testimonios</a>
             <a href="#faq">FAQ</a>
             <a href="https://system.mobatai.com/acceso">Iniciar sesión</a>
             <a href="registro.html" class="nav-cta">Empezar gratis</a>
@@ -310,20 +435,21 @@
             <a href="registro.html?plan=profesional" class="btn-hero-primary">
                 <i class="bi bi-rocket-takeoff"></i> Empezar prueba gratis
             </a>
-            <a href="#funciones" class="btn-hero-outline">Ver funciones</a>
+            <a href="#demo" class="btn-hero-outline"><i class="bi bi-play-circle"></i> Ver demo</a>
         </div>
         <p class="hero-note">
-            <i class="bi bi-shield-check me-1"></i>
+            <i class="bi bi-shield-check"></i>
             30 días gratis · Sin tarjeta · Cancelás cuando querés
         </p>
         <div class="hero-stats">
             <div class="stat-item">
-                <div class="stat-number">30</div>
-                <div class="stat-label">días de prueba</div>
+                <!-- TODO: reemplazar con número real de negocios activos -->
+                <div class="stat-number">+XX</div>
+                <div class="stat-label">negocios activos</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">∞</div>
-                <div class="stat-label">visitas registradas</div>
+                <div class="stat-number">30</div>
+                <div class="stat-label">días de prueba</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">1 click</div>
@@ -332,6 +458,27 @@
         </div>
     </div>
 </div>
+
+<!-- SCREENSHOT DEL SISTEMA -->
+<section style="background: var(--bg2);" id="demo">
+    <div class="section-inner">
+        <div class="section-label">El sistema</div>
+        <h2 class="section-title">Mirá cómo funciona</h2>
+        <p class="section-sub">Simple, rápido y desde el celular.</p>
+
+        <!-- TODO: reemplazar con video real (embed YouTube/Vimeo o <video>) -->
+        <div class="video-wrap" id="video-placeholder">
+            <div class="video-play"><i class="bi bi-play-fill" style="margin-left:4px;"></i></div>
+            <span>Video demo — 60 segundos</span>
+        </div>
+
+        <!-- TODO: reemplazar con screenshot real del dashboard -->
+        <div class="screenshot-wrap" style="margin-top:1.5rem; aspect-ratio: 16/7;">
+            <i class="bi bi-display"></i>
+            <span>Screenshot del panel principal</span>
+        </div>
+    </div>
+</section>
 
 <!-- FEATURES -->
 <section id="funciones">
@@ -424,8 +571,55 @@
     </div>
 </section>
 
-<!-- RUBROS -->
+<!-- COMPARATIVA -->
 <section>
+    <div class="section-inner">
+        <div class="section-label">Comparativa</div>
+        <h2 class="section-title">MOBATAI vs seguir con papel y Excel</h2>
+        <p class="section-sub">Lo que antes te llevaba horas, ahora lo hacés en minutos.</p>
+
+        <div class="compare-table">
+            <div class="compare-header">
+                <div class="col-feature">¿Qué necesitás?</div>
+                <div>Papel / Excel</div>
+                <div class="col-mobatai">MOBATAI</div>
+            </div>
+            <div class="compare-row">
+                <div class="col-feature">Registrar una visita</div>
+                <div class="col-no">Anotarlo después, fácil de olvidar</div>
+                <div class="col-mobatai"><i class="bi bi-check-circle-fill"></i> En el momento, desde el celular</div>
+            </div>
+            <div class="compare-row">
+                <div class="col-feature">Calcular lo que te deben</div>
+                <div class="col-no">A mano, sumar visita por visita</div>
+                <div class="col-mobatai"><i class="bi bi-check-circle-fill"></i> Automático al cerrar el mes</div>
+            </div>
+            <div class="compare-row">
+                <div class="col-feature">Avisar el cobro</div>
+                <div class="col-no">Escribir cada mensaje a mano</div>
+                <div class="col-mobatai"><i class="bi bi-check-circle-fill"></i> Un click por WhatsApp</div>
+            </div>
+            <div class="compare-row">
+                <div class="col-feature">Historial de un cliente</div>
+                <div class="col-no">Buscar entre papeles o celdas</div>
+                <div class="col-mobatai"><i class="bi bi-check-circle-fill"></i> Todo en una pantalla</div>
+            </div>
+            <div class="compare-row">
+                <div class="col-feature">Control de stock</div>
+                <div class="col-no">Hoja aparte, siempre desactualizada</div>
+                <div class="col-mobatai"><i class="bi bi-check-circle-fill"></i> Se descuenta solo con cada visita</div>
+            </div>
+            <div class="compare-row">
+                <div class="col-feature">Empleados con acceso</div>
+                <div class="col-no">No es posible</div>
+                <div class="col-mobatai"><i class="bi bi-check-circle-fill"></i> Cada uno con su usuario y permisos</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RUBROS -->
+<section style="background: var(--bg2);">
     <div class="section-inner">
         <div class="section-label">Rubros</div>
         <h2 class="section-title">Para cualquier servicio recurrente</h2>
@@ -447,6 +641,45 @@
     </div>
 </section>
 
+<!-- TESTIMONIOS -->
+<section id="testimonios">
+    <div class="section-inner">
+        <div class="section-label">Testimonios</div>
+        <h2 class="section-title">Lo que dicen quienes ya lo usan</h2>
+        <p class="section-sub"><!-- TODO: agregar cantidad real de negocios --></p>
+
+        <div class="testimonials-grid">
+            <!-- TODO: reemplazar con testimonios reales -->
+            <div class="testimonial-placeholder">
+                <i class="bi bi-chat-quote"></i>
+                <span>Testimonio de cliente real</span>
+            </div>
+            <div class="testimonial-placeholder">
+                <i class="bi bi-chat-quote"></i>
+                <span>Testimonio de cliente real</span>
+            </div>
+            <div class="testimonial-placeholder">
+                <i class="bi bi-chat-quote"></i>
+                <span>Testimonio de cliente real</span>
+            </div>
+        </div>
+
+        <!-- Ejemplo de cómo queda un testimonio real (descomentar cuando tengas):
+        <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Antes tardaba 2 horas en cerrar el mes. Ahora lo hago en 15 minutos."</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar"><i class="bi bi-person"></i></div>
+                <div>
+                    <div class="testimonial-name">Nombre Apellido</div>
+                    <div class="testimonial-role">Piletero · Buenos Aires</div>
+                </div>
+            </div>
+        </div>
+        -->
+    </div>
+</section>
+
 <!-- PRICING -->
 <section id="precios">
     <div class="section-inner">
@@ -458,9 +691,10 @@
             <!-- INDIVIDUAL -->
             <div class="plan-card">
                 <div class="plan-name">Individual</div>
+                <!-- TODO: definir precio -->
                 <div class="plan-price"><sup>$</sup>XX</div>
                 <div class="plan-period">por mes · 1 acceso</div>
-                <div class="plan-trial"><i class="bi bi-gift me-1"></i>30 días gratis</div>
+                <div class="plan-trial"><i class="bi bi-gift"></i> 30 días gratis</div>
                 <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:1.2rem;">
                     "Todo lo indispensable para llevar adelante tu negocio"
                 </p>
@@ -474,17 +708,16 @@
                     <li><i class="bi bi-check-circle-fill"></i> Control de stock</li>
                     <li><i class="bi bi-check-circle-fill"></i> Grupos de clientes</li>
                 </ul>
-                <a href="registro.html?plan=individual" class="plan-btn plan-btn-ghost">
-                    Empezar gratis
-                </a>
+                <a href="registro.html?plan=individual" class="plan-btn plan-btn-ghost">Empezar gratis</a>
             </div>
 
             <!-- PROFESIONAL -->
             <div class="plan-card featured">
                 <div class="plan-name">Profesional</div>
+                <!-- TODO: definir precio -->
                 <div class="plan-price"><sup>$</sup>XX</div>
                 <div class="plan-period">por mes · hasta 3 admins + 30 empleados</div>
-                <div class="plan-trial"><i class="bi bi-gift me-1"></i>30 días gratis</div>
+                <div class="plan-trial"><i class="bi bi-gift"></i> 30 días gratis</div>
                 <p style="font-size:0.82rem;color:#93c5fd;font-style:italic;margin-bottom:1.2rem;">
                     "Funcionalidades adicionales y personalización"
                 </p>
@@ -497,17 +730,16 @@
                     <li><i class="bi bi-check-circle-fill"></i> Plantillas de mensajes</li>
                     <li><i class="bi bi-check-circle-fill"></i> Productos extra masivos</li>
                 </ul>
-                <a href="registro.html?plan=profesional" class="plan-btn plan-btn-solid">
-                    Empezar gratis
-                </a>
+                <a href="registro.html?plan=profesional" class="plan-btn plan-btn-solid">Empezar gratis</a>
             </div>
 
             <!-- EMPRESA -->
             <div class="plan-card">
                 <div class="plan-name">Empresa</div>
+                <!-- TODO: definir precio -->
                 <div class="plan-price"><sup>$</sup>XX</div>
                 <div class="plan-period">por mes · sin límites</div>
-                <div class="plan-trial"><i class="bi bi-gift me-1"></i>30 días gratis</div>
+                <div class="plan-trial"><i class="bi bi-gift"></i> 30 días gratis</div>
                 <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:1.2rem;">
                     "Herramientas de administración para equipos grandes"
                 </p>
@@ -520,9 +752,17 @@
                     <li><i class="bi bi-check-circle-fill"></i> Múltiples negocios</li>
                     <li><i class="bi bi-check-circle-fill"></i> Soporte prioritario</li>
                 </ul>
-                <a href="registro.html?plan=empresa" class="plan-btn plan-btn-ghost">
-                    Empezar gratis
-                </a>
+                <a href="registro.html?plan=empresa" class="plan-btn plan-btn-ghost">Empezar gratis</a>
+            </div>
+        </div>
+
+        <!-- GARANTIA -->
+        <div class="guarantee-box">
+            <div class="guarantee-icon"><i class="bi bi-shield-check"></i></div>
+            <div>
+                <h3>Garantía de satisfacción</h3>
+                <!-- TODO: definir política real de garantía/devolución -->
+                <p>Si en los primeros 30 días no estás conforme, te devolvemos el dinero. Sin preguntas.</p>
             </div>
         </div>
     </div>
@@ -559,6 +799,16 @@
                 <div class="faq-q">¿Puedo cancelar cuando quiero? <i class="bi bi-plus-lg"></i></div>
                 <div class="faq-a">Sí, sin permanencia ni penalidades. Si cancelás, el plan sigue activo hasta el fin del período pagado.</div>
             </div>
+            <div class="faq-item">
+                <div class="faq-q">¿Dónde se guardan mis datos? <i class="bi bi-plus-lg"></i></div>
+                <!-- TODO: completar con detalles reales del hosting/privacidad -->
+                <div class="faq-a">Tus datos se almacenan en servidores seguros. Nunca los compartimos con terceros. Podés exportar o eliminar tu información cuando quieras.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">¿Cómo se abona el plan? <i class="bi bi-plus-lg"></i></div>
+                <!-- TODO: completar con medios de pago reales -->
+                <div class="faq-a">Aceptamos transferencia bancaria y medios de pago digitales. Una vez confirmado el pago, el plan se activa de forma inmediata.</div>
+            </div>
         </div>
     </div>
 </section>
@@ -573,16 +823,26 @@
 </div>
 
 <footer>
-    <p>
-        &copy; 2026 MOBATAI &nbsp;·&nbsp;
-        <a href="#">Términos y condiciones</a> &nbsp;·&nbsp;
-        <a href="#">Privacidad</a> &nbsp;·&nbsp;
-        <a href="https://wa.me/5491100000000">Contacto</a>
-    </p>
+    <div class="footer-inner">
+        <div class="footer-links">
+            <a href="#funciones">Funciones</a>
+            <a href="#precios">Precios</a>
+            <a href="#faq">FAQ</a>
+            <a href="#">Términos y condiciones</a>
+            <a href="#">Privacidad</a>
+            <!-- TODO: reemplazar con número real de WhatsApp -->
+            <a href="https://wa.me/5491100000000">Contacto</a>
+        </div>
+        <p>&copy; 2026 MOBATAI · Tomás Moreno Bauer</p>
+    </div>
 </footer>
 
+<!-- TODO: reemplazar con número real de WhatsApp -->
+<a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20MOBATAI" class="wa-float" target="_blank" title="Consultar por WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+</a>
+
 <script>
-    // FAQ toggle
     document.querySelectorAll('.faq-q').forEach(q => {
         q.addEventListener('click', () => {
             const item = q.closest('.faq-item');
@@ -592,13 +852,11 @@
         });
     });
 
-    // Navbar scroll effect
     window.addEventListener('scroll', () => {
         document.querySelector('.navbar').style.background =
             window.scrollY > 20 ? 'rgba(10,15,30,0.98)' : 'rgba(10,15,30,0.85)';
     });
 
-    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
             const target = document.querySelector(a.getAttribute('href'));
