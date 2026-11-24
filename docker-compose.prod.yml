@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    container_name: mobataihome
+    restart: always
+    ports:
+      - "127.0.0.1:${APP_PORT:-5008}:80"
