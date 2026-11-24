@@ -4,4 +4,6 @@ services:
     container_name: mobataihome
     restart: always
     ports:
-      - "${APP_PORT:-5010}:80"
+      - "${APP_PORT:-5010}:3000"
+    env_file:
+      - .env

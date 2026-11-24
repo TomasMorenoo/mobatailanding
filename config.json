@@ -1,0 +1,39 @@
+{
+  "wa_number": "5491100000000",
+  "hero": {
+    "badge": "Nuevo · Prueba 30 días gratis",
+    "title_main": "Gestioná tu negocio",
+    "title_highlight": "sin complicaciones",
+    "subtitle": "Clientes, visitas, cobros y estadísticas. Todo en un lugar. Pensado para trabajadores independientes y pequeñas empresas de servicios.",
+    "note": "30 días gratis · Sin tarjeta · Cancelás cuando querés"
+  },
+  "stats": [
+    { "number": "+XX", "label": "negocios activos" },
+    { "number": "30", "label": "días de prueba" },
+    { "number": "1 click", "label": "para cobrar por WhatsApp" }
+  ],
+  "pricing": {
+    "individual": { "price": "XX", "period": "por mes · 1 acceso" },
+    "profesional": { "price": "XX", "period": "por mes · hasta 3 admins + 30 empleados" },
+    "empresa": { "price": "XX", "period": "por mes · sin límites" }
+  },
+  "testimonials": [
+    { "active": false, "stars": 5, "text": "", "name": "", "role": "" },
+    { "active": false, "stars": 5, "text": "", "name": "", "role": "" },
+    { "active": false, "stars": 5, "text": "", "name": "", "role": "" }
+  ],
+  "faq": [
+    { "q": "¿Necesito instalar algo?", "a": "No. MOBATAI es 100% web. Lo usás desde el navegador del celular o computadora, sin instalar nada. También funciona como PWA (podés \"instalarlo\" en el home del celular)." },
+    { "q": "¿Puedo probarlo antes de pagar?", "a": "Sí. Todos los planes tienen 30 días de prueba gratuita. No pedimos tarjeta de crédito para empezar." },
+    { "q": "¿Qué pasa cuando vence el período de prueba?", "a": "Tu cuenta queda pausada pero los datos se conservan. Elegís un plan, lo abonás y en minutos te lo activamos." },
+    { "q": "¿Puedo tener varios negocios con la misma cuenta?", "a": "Sí. Con una sola cuenta podés crear y gestionar múltiples negocios. Cada uno tiene sus propios datos, empleados y configuración." },
+    { "q": "¿Puedo agregar empleados?", "a": "Sí. En el plan Profesional podés tener hasta 3 usuarios; en el plan Empresa, ilimitados. Cada empleado tiene su usuario y contraseña con los permisos que vos le asignés." },
+    { "q": "¿Puedo cancelar cuando quiero?", "a": "Sí, sin permanencia ni penalidades. Si cancelás, el plan sigue activo hasta el fin del período pagado." },
+    { "q": "¿Dónde se guardan mis datos?", "a": "Tus datos se almacenan en servidores seguros. Nunca los compartimos con terceros. Podés exportar o eliminar tu información cuando quieras." },
+    { "q": "¿Cómo se abona el plan?", "a": "Aceptamos transferencia bancaria y medios de pago digitales. Una vez confirmado el pago, el plan se activa de forma inmediata." }
+  ],
+  "guarantee": {
+    "title": "Garantía de satisfacción",
+    "text": "Si en los primeros 30 días no estás conforme, te devolvemos el dinero. Sin preguntas."
+  }
+}

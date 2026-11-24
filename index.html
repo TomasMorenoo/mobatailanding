@@ -433,14 +433,14 @@
 <!-- HERO -->
 <div class="hero">
     <div class="hero-inner">
-        <div class="hero-badge">
+        <div class="hero-badge" id="cfg-hero-badge">
             <i class="bi bi-stars"></i> Nuevo · Prueba 30 días gratis
         </div>
         <h1>
-            Gestioná tu negocio<br>
-            <span class="highlight">sin complicaciones</span>
+            <span id="cfg-hero-title-main">Gestioná tu negocio</span><br>
+            <span class="highlight" id="cfg-hero-title-highlight">sin complicaciones</span>
         </h1>
-        <p>
+        <p id="cfg-hero-subtitle">
             Clientes, visitas, cobros y estadísticas. Todo en un lugar.
             Pensado para trabajadores independientes y pequeñas empresas de servicios.
         </p>
@@ -450,23 +450,22 @@
             </a>
             <a href="#demo" class="btn-hero-outline"><i class="bi bi-play-circle"></i> Ver demo</a>
         </div>
-        <p class="hero-note">
+        <p class="hero-note" id="cfg-hero-note">
             <i class="bi bi-shield-check"></i>
             30 días gratis · Sin tarjeta · Cancelás cuando querés
         </p>
         <div class="hero-stats">
             <div class="stat-item">
-                <!-- TODO: reemplazar con número real de negocios activos -->
-                <div class="stat-number">+XX</div>
-                <div class="stat-label">negocios activos</div>
+                <div class="stat-number" id="cfg-stat-0-num">+XX</div>
+                <div class="stat-label" id="cfg-stat-0-label">negocios activos</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">30</div>
-                <div class="stat-label">días de prueba</div>
+                <div class="stat-number" id="cfg-stat-1-num">30</div>
+                <div class="stat-label" id="cfg-stat-1-label">días de prueba</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">1 click</div>
-                <div class="stat-label">para cobrar por WhatsApp</div>
+                <div class="stat-number" id="cfg-stat-2-num">1 click</div>
+                <div class="stat-label" id="cfg-stat-2-label">para cobrar por WhatsApp</div>
             </div>
         </div>
     </div>
@@ -678,8 +677,7 @@
         <h2 class="section-title">Lo que dicen quienes ya lo usan</h2>
         <p class="section-sub"><!-- TODO: agregar cantidad real de negocios --></p>
 
-        <div class="testimonials-grid">
-            <!-- TODO: reemplazar con testimonios reales -->
+        <div class="testimonials-grid" id="cfg-testimonials-wrap">
             <div class="testimonial-placeholder">
                 <i class="bi bi-chat-quote"></i>
                 <span>Testimonio de cliente real</span>
@@ -693,20 +691,6 @@
                 <span>Testimonio de cliente real</span>
             </div>
         </div>
-
-        <!-- Ejemplo de cómo queda un testimonio real (descomentar cuando tengas):
-        <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Antes tardaba 2 horas en cerrar el mes. Ahora lo hago en 15 minutos."</p>
-            <div class="testimonial-author">
-                <div class="testimonial-avatar"><i class="bi bi-person"></i></div>
-                <div>
-                    <div class="testimonial-name">Nombre Apellido</div>
-                    <div class="testimonial-role">Piletero · Buenos Aires</div>
-                </div>
-            </div>
-        </div>
-        -->
     </div>
 </section>
 
@@ -721,9 +705,8 @@
             <!-- INDIVIDUAL -->
             <div class="plan-card">
                 <div class="plan-name">Individual</div>
-                <!-- TODO: definir precio -->
-                <div class="plan-price"><sup>$</sup>XX</div>
-                <div class="plan-period">por mes · 1 acceso</div>
+                <div class="plan-price"><sup>$</sup><span id="cfg-plan-individual-price">XX</span></div>
+                <div class="plan-period" id="cfg-plan-individual-period">por mes · 1 acceso</div>
                 <div class="plan-trial"><i class="bi bi-gift"></i> 30 días gratis</div>
                 <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:1.2rem;">
                     "Todo lo indispensable para llevar adelante tu negocio"
@@ -744,9 +727,8 @@
             <!-- PROFESIONAL -->
             <div class="plan-card featured">
                 <div class="plan-name">Profesional</div>
-                <!-- TODO: definir precio -->
-                <div class="plan-price"><sup>$</sup>XX</div>
-                <div class="plan-period">por mes · hasta 3 admins + 30 empleados</div>
+                <div class="plan-price"><sup>$</sup><span id="cfg-plan-profesional-price">XX</span></div>
+                <div class="plan-period" id="cfg-plan-profesional-period">por mes · hasta 3 admins + 30 empleados</div>
                 <div class="plan-trial"><i class="bi bi-gift"></i> 30 días gratis</div>
                 <p style="font-size:0.82rem;color:#93c5fd;font-style:italic;margin-bottom:1.2rem;">
                     "Funcionalidades adicionales y personalización"
@@ -766,9 +748,8 @@
             <!-- EMPRESA -->
             <div class="plan-card">
                 <div class="plan-name">Empresa</div>
-                <!-- TODO: definir precio -->
-                <div class="plan-price"><sup>$</sup>XX</div>
-                <div class="plan-period">por mes · sin límites</div>
+                <div class="plan-price"><sup>$</sup><span id="cfg-plan-empresa-price">XX</span></div>
+                <div class="plan-period" id="cfg-plan-empresa-period">por mes · sin límites</div>
                 <div class="plan-trial"><i class="bi bi-gift"></i> 30 días gratis</div>
                 <p style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:1.2rem;">
                     "Herramientas de administración para equipos grandes"
@@ -790,9 +771,8 @@
         <div class="guarantee-box">
             <div class="guarantee-icon"><i class="bi bi-shield-check"></i></div>
             <div>
-                <h3>Garantía de satisfacción</h3>
-                <!-- TODO: definir política real de garantía/devolución -->
-                <p>Si en los primeros 30 días no estás conforme, te devolvemos el dinero. Sin preguntas.</p>
+                <h3 id="cfg-guarantee-title">Garantía de satisfacción</h3>
+                <p id="cfg-guarantee-text">Si en los primeros 30 días no estás conforme, te devolvemos el dinero. Sin preguntas.</p>
             </div>
         </div>
     </div>
@@ -804,7 +784,7 @@
         <div class="section-label">FAQ</div>
         <h2 class="section-title">Preguntas frecuentes</h2>
 
-        <div class="faq-list">
+        <div class="faq-list" id="cfg-faq-list">
             <div class="faq-item">
                 <div class="faq-q">¿Necesito instalar algo? <i class="bi bi-plus-lg"></i></div>
                 <div class="faq-a">No. MOBATAI es 100% web. Lo usás desde el navegador del celular o computadora, sin instalar nada. También funciona como PWA (podés "instalarlo" en el home del celular).</div>
@@ -867,8 +847,7 @@
     </div>
 </footer>
 
-<!-- TODO: reemplazar con número real de WhatsApp -->
-<a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20MOBATAI" class="wa-float" target="_blank" title="Consultar por WhatsApp">
+<a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20MOBATAI" class="wa-float" id="cfg-wa" target="_blank" title="Consultar por WhatsApp">
     <i class="bi bi-whatsapp"></i>
 </a>
 
@@ -919,6 +898,101 @@
             const target = document.querySelector(a.getAttribute('href'));
             if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/config')
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(function(c) {
+                var el = function(id) { return document.getElementById(id); };
+                var setText = function(id, val) { var e = el(id); if (e && val !== undefined) e.textContent = val; };
+                var setAttr = function(id, attr, val) { var e = el(id); if (e && val !== undefined) e.setAttribute(attr, val); };
+
+                if (c.wa_number) {
+                    var waUrl = 'https://wa.me/' + c.wa_number + '?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20MOBATAI';
+                    setAttr('cfg-wa', 'href', waUrl);
+                }
+
+                if (c.hero) {
+                    var badge = el('cfg-hero-badge');
+                    if (badge && c.hero.badge) badge.innerHTML = '<i class="bi bi-stars"></i> ' + c.hero.badge;
+                    setText('cfg-hero-title-main', c.hero.title_main);
+                    setText('cfg-hero-title-highlight', c.hero.title_highlight);
+                    setText('cfg-hero-subtitle', c.hero.subtitle);
+                    var note = el('cfg-hero-note');
+                    if (note && c.hero.note) note.innerHTML = '<i class="bi bi-shield-check"></i> ' + c.hero.note;
+                }
+
+                if (c.stats) {
+                    c.stats.forEach(function(s, i) {
+                        setText('cfg-stat-' + i + '-num', s.number);
+                        setText('cfg-stat-' + i + '-label', s.label);
+                    });
+                }
+
+                if (c.pricing) {
+                    setText('cfg-plan-individual-price', c.pricing.individual?.price);
+                    setText('cfg-plan-individual-period', c.pricing.individual?.period);
+                    setText('cfg-plan-profesional-price', c.pricing.profesional?.price);
+                    setText('cfg-plan-profesional-period', c.pricing.profesional?.period);
+                    setText('cfg-plan-empresa-price', c.pricing.empresa?.price);
+                    setText('cfg-plan-empresa-period', c.pricing.empresa?.period);
+                }
+
+                if (c.testimonials) {
+                    var wrap = el('cfg-testimonials-wrap');
+                    if (wrap) {
+                        wrap.innerHTML = '';
+                        c.testimonials.forEach(function(t) {
+                            if (t.active) {
+                                var stars = '';
+                                for (var s = 0; s < (t.stars || 5); s++) stars += '★';
+                                wrap.innerHTML += '<div class="testimonial-card">'
+                                    + '<div class="testimonial-stars">' + stars + '</div>'
+                                    + '<p class="testimonial-text">"' + t.text + '"</p>'
+                                    + '<div class="testimonial-author">'
+                                    + '<div class="testimonial-avatar"><i class="bi bi-person"></i></div>'
+                                    + '<div><div class="testimonial-name">' + t.name + '</div>'
+                                    + '<div class="testimonial-role">' + t.role + '</div></div>'
+                                    + '</div></div>';
+                            } else {
+                                wrap.innerHTML += '<div class="testimonial-placeholder">'
+                                    + '<i class="bi bi-chat-quote"></i>'
+                                    + '<span>Testimonio de cliente real</span></div>';
+                            }
+                        });
+                    }
+                }
+
+                if (c.faq) {
+                    var faqList = el('cfg-faq-list');
+                    if (faqList) {
+                        faqList.innerHTML = '';
+                        c.faq.forEach(function(item) {
+                            faqList.innerHTML += '<div class="faq-item">'
+                                + '<div class="faq-q">' + item.q + ' <i class="bi bi-plus-lg"></i></div>'
+                                + '<div class="faq-a">' + item.a + '</div>'
+                                + '</div>';
+                        });
+                        faqList.querySelectorAll('.faq-q').forEach(function(q) {
+                            q.addEventListener('click', function() {
+                                var item = q.closest('.faq-item');
+                                var wasOpen = item.classList.contains('open');
+                                faqList.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                                if (!wasOpen) item.classList.add('open');
+                            });
+                        });
+                    }
+                }
+
+                if (c.guarantee) {
+                    setText('cfg-guarantee-title', c.guarantee.title);
+                    setText('cfg-guarantee-text', c.guarantee.text);
+                }
+            })
+            .catch(function() {});
     });
 </script>
 </body>
